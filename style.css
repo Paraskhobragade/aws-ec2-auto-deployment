@@ -1,124 +1,153 @@
-/* Reset */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
-
 body{
-    min-height:100vh;
+    margin:0;
+    height:100vh;
+    overflow:hidden;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(
-        135deg,
-        #0f172a 0%,
-        #1e3a8a 35%,
-        #7c3aed 70%,
-        #ec4899 100%
-    );
-    overflow:hidden;
+
+    background:
+        radial-gradient(circle at 70% 20%, #ffb347 0%, #ff7b00 25%, transparent 30%),
+        linear-gradient(to bottom,
+        #87ceeb 0%,
+        #f8d568 45%,
+        #e8c170 65%,
+        #b8860b 100%);
 }
 
-/* Background Effects */
-.bg-circle{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(60px);
+/* 3D Scene */
+.scene{
+    perspective:2000px;
 }
 
-.circle1{
-    width:300px;
-    height:300px;
-    background:#38bdf8;
-    top:-100px;
-    left:-100px;
-}
-
-.circle2{
-    width:250px;
-    height:250px;
-    background:#ec4899;
-    bottom:-80px;
-    right:-80px;
-}
-
-/* 3D Container */
-.container{
-    perspective:1200px;
-}
-
-/* Glass Card */
+/* Main Card */
 .card{
-    width:400px;
-    padding:35px;
-    border-radius:25px;
-    background:rgba(255,255,255,0.12);
+    width:800px;
+    padding:60px;
+    border-radius:40px;
+
+    background:rgba(255,255,255,.12);
     backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,0.2);
-    color:#fff;
+
+    border:1px solid rgba(255,255,255,.25);
+
     transform-style:preserve-3d;
-    transform:rotateY(-12deg) rotateX(8deg);
+    transform:rotateX(8deg) rotateY(-12deg);
+
     box-shadow:
-        0 25px 45px rgba(0,0,0,0.35);
-    transition:all .5s ease;
+        0 50px 80px rgba(0,0,0,.35),
+        0 15px 30px rgba(0,0,0,.2);
+
+    transition:.6s;
 }
 
 .card:hover{
-    transform:rotateY(0deg) rotateX(0deg) scale(1.05);
+    transform:
+        rotateX(0deg)
+        rotateY(0deg)
+        translateY(-20px);
 }
 
-.logo{
-    font-size:30px;
-    font-weight:700;
-    color:#38bdf8;
-}
-
+/* Title */
 h1{
-    margin-top:25px;
-    font-size:42px;
-    line-height:1.2;
+    font-size:72px;
+    color:white;
+    text-shadow:
+        0 4px 10px rgba(0,0,0,.4),
+        0 8px 20px rgba(0,0,0,.3);
+
+    transform:translateZ(80px);
 }
 
+/* Text */
 p{
-    margin-top:15px;
-    color:#e5e7eb;
-    line-height:1.6;
+    font-size:22px;
+    color:#fff;
+    opacity:.95;
+    line-height:1.7;
+
+    transform:translateZ(50px);
 }
 
-.features{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:25px;
-}
-
-.feature{
-    background:rgba(255,255,255,0.15);
-    padding:10px 18px;
-    border-radius:25px;
-    border:1px solid rgba(255,255,255,0.15);
-}
-
+/* 3D Button */
 .btn{
     display:inline-block;
-    margin-top:30px;
-    padding:14px 35px;
-    text-decoration:none;
-    color:#fff;
-    border-radius:30px;
-    background:linear-gradient(
-        90deg,
-        #06b6d4,
-        #3b82f6,
-        #8b5cf6
+    margin-top:35px;
+
+    padding:18px 45px;
+    border-radius:60px;
+
+    background:
+    linear-gradient(
+        180deg,
+        #ffb347,
+        #ff7b00
     );
-    box-shadow:0 10px 25px rgba(59,130,246,.4);
+
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+
+    transform:translateZ(120px);
+
+    box-shadow:
+        0 15px 25px rgba(255,123,0,.4),
+        inset 0 3px 6px rgba(255,255,255,.4);
+
     transition:.3s;
 }
 
 .btn:hover{
-    transform:translateY(-5px);
-    box-shadow:0 15px 30px rgba(59,130,246,.6);
+    transform:
+        translateZ(120px)
+        scale(1.1);
+}
+
+/* Floating 3D Objects */
+.sphere{
+    position:absolute;
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle at 30% 30%,
+        #fff,
+        #ffb347,
+        #ff7b00
+    );
+
+    box-shadow:
+        inset -20px -20px 40px rgba(0,0,0,.2),
+        0 30px 60px rgba(0,0,0,.3);
+}
+
+.s1{
+    width:180px;
+    height:180px;
+    top:120px;
+    left:120px;
+}
+
+.s2{
+    width:120px;
+    height:120px;
+    bottom:150px;
+    right:120px;
+}
+
+/* Ground */
+.ground{
+    position:absolute;
+    bottom:-150px;
+    width:150%;
+    height:400px;
+
+    background:
+    radial-gradient(
+        ellipse at center,
+        #5d8a3d,
+        #2e5f2d
+    );
+
+    border-radius:50%;
 }
