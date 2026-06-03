@@ -1,1 +1,151 @@
-<p>Welcome to my repo</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Website</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.container{
+    perspective:1000px;
+}
+
+.card{
+    width:380px;
+    height:500px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    padding:30px;
+    color:white;
+    transform-style:preserve-3d;
+    transform:rotateY(-15deg) rotateX(10deg);
+    box-shadow:
+        0 25px 50px rgba(0,0,0,0.5),
+        inset 0 0 20px rgba(255,255,255,0.1);
+    transition:0.5s;
+}
+
+.card:hover{
+    transform:rotateY(0deg) rotateX(0deg) scale(1.05);
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    transform:translateZ(50px);
+}
+
+h1{
+    margin-top:40px;
+    font-size:42px;
+    line-height:1.2;
+    transform:translateZ(70px);
+}
+
+p{
+    margin-top:20px;
+    color:#d1d5db;
+    line-height:1.6;
+    transform:translateZ(40px);
+}
+
+.btn{
+    display:inline-block;
+    margin-top:30px;
+    padding:15px 35px;
+    background:#38bdf8;
+    color:white;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:bold;
+    transform:translateZ(80px);
+    box-shadow:0 10px 25px rgba(56,189,248,0.5);
+    transition:.3s;
+}
+
+.btn:hover{
+    background:#0ea5e9;
+    transform:translateZ(80px) translateY(-5px);
+}
+
+.circle{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+}
+
+.c1{
+    width:300px;
+    height:300px;
+    top:-80px;
+    left:-100px;
+}
+
+.c2{
+    width:250px;
+    height:250px;
+    bottom:-80px;
+    right:-80px;
+}
+
+.features{
+    margin-top:30px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    transform:translateZ(60px);
+}
+
+.feature{
+    background:rgba(255,255,255,0.15);
+    padding:10px 15px;
+    border-radius:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="circle c1"></div>
+<div class="circle c2"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="logo">🚀 3D Tech</div>
+
+        <h1>Future of Web Design</h1>
+
+        <p>
+            Experience modern 3D UI with glassmorphism,
+            depth effects, smooth animations and a futuristic design.
+        </p>
+
+        <div class="features">
+            <div class="feature">3D Effects</div>
+            <div class="feature">Responsive</div>
+            <div class="feature">Modern UI</div>
+        </div>
+
+        <a href="#" class="btn">Get Started</a>
+    </div>
+</div>
+
+</body>
+</html>
