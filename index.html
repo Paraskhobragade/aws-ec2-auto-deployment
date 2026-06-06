@@ -3,144 +3,411 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hakuna Matata Style UI</title>
-
+<title>Hakuna Matata – Paras C. Khobragade</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Trebuchet MS',sans-serif;
-}
+  *{margin:0;padding:0;box-sizing:border-box;}
 
-body{
+  :root{
+    --sun:#FF6B00;
+    --sky-top:#1a0533;
+    --sky-mid:#c0392b;
+    --sky-low:#FF7B47;
+    --sky-base:#FFD580;
+    --hill1:#2E7D32;
+    --hill2:#1B5E20;
+    --hill3:#0d3b12;
+    --card-bg:rgba(255,255,255,0.13);
+    --gold:#FFD700;
+    --text-dark:#3B1A00;
+  }
+
+  body{
     min-height:100vh;
+    overflow-x:hidden;
+    overflow-y:auto;
     background:linear-gradient(
-        to bottom,
-        #ffb347,
-        #ffcc70,
-        #ffeaa7
+      to bottom,
+      #1a0533 0%,
+      #c0392b 25%,
+      #FF7B47 55%,
+      #FFD580 80%,
+      #ffe0a0 100%
     );
-    overflow:hidden;
-}
+    font-family:'Nunito',sans-serif;
+  }
 
-.hero{
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  /* ── STARS ── */
+  .stars{position:fixed;top:0;left:0;width:100%;height:50%;z-index:0;pointer-events:none;}
+  .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,2s) ease-in-out infinite alternate;}
+  @keyframes twinkle{from{opacity:.1;transform:scale(.7);}to{opacity:.9;transform:scale(1.2);}}
+
+  /* ── SUN ── */
+  .sun-wrap{
+    position:fixed;top:60px;left:50%;transform:translateX(-50%);
+    width:140px;height:140px;z-index:1;
+  }
+  .sun{
+    width:140px;height:140px;border-radius:50%;
+    background:radial-gradient(circle at 38% 38%, #fff5aa, #FFB300 40%, #FF6B00);
+    box-shadow:0 0 60px 30px rgba(255,140,0,.6),0 0 120px 60px rgba(255,90,0,.3);
+    animation:pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 60px 30px rgba(255,140,0,.6),0 0 120px 60px rgba(255,90,0,.3);}
+    50%{box-shadow:0 0 80px 40px rgba(255,180,0,.8),0 0 160px 80px rgba(255,100,0,.4);}
+  }
+  .rays{
+    position:absolute;top:50%;left:50%;
+    width:300px;height:300px;margin:-150px;
+    animation:spin 18s linear infinite;
+  }
+  .ray{
+    position:absolute;top:50%;left:50%;
+    width:150px;height:3px;margin-top:-1.5px;
+    background:linear-gradient(to right,rgba(255,200,0,.9),rgba(255,200,0,0));
+    transform-origin:0 50%;
+    border-radius:4px;
+  }
+  @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+  /* ── CLOUDS ── */
+  .cloud{
+    position:fixed;z-index:2;opacity:.55;
+    filter:blur(2px);
+    animation:drift var(--dur,60s) linear infinite;
+  }
+  .cloud svg{width:var(--w,180px);height:auto;}
+  @keyframes drift{from{transform:translateX(-300px);}to{transform:translateX(110vw);}}
+
+  /* ── HILLS ── */
+  .hills{position:fixed;bottom:0;left:0;width:100%;z-index:3;pointer-events:none;}
+  .hill{width:100%;position:absolute;bottom:0;}
+
+  /* ── FIREFLIES ── */
+  .firefly{
+    position:fixed;width:5px;height:5px;border-radius:50%;
+    background:rgba(255,255,180,.9);
+    box-shadow:0 0 8px 4px rgba(255,255,100,.7);
+    animation:fly var(--d,7s) ease-in-out infinite alternate,blink var(--b,2s) ease-in-out infinite;
+    z-index:4;pointer-events:none;
+  }
+  @keyframes fly{
+    from{transform:translate(0,0);}
+    to{transform:translate(var(--tx,30px),var(--ty,-40px));}
+  }
+  @keyframes blink{0%,100%{opacity:0;}50%{opacity:1;}}
+
+  /* ── HERO LAYOUT ── */
+  .hero{
+    position:relative;z-index:10;
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:200px 20px 180px;
+  }
+
+  /* ── 3D CARD ── */
+  .card-scene{perspective:1200px;}
+  .card{
+    width:min(700px,94vw);
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border:1.5px solid rgba(255,255,255,0.35);
+    border-radius:32px;
+    padding:52px 48px 44px;
     text-align:center;
     position:relative;
-}
+    box-shadow:
+      0 8px 32px rgba(0,0,0,.35),
+      0 0 0 1px rgba(255,255,255,.1) inset,
+      0 2px 0 rgba(255,255,255,.35) inset;
+    transform:rotateX(4deg);
+    transform-style:preserve-3d;
+    transition:transform .4s ease,box-shadow .4s ease;
+    animation:cardFloat 5s ease-in-out infinite;
+  }
+  @keyframes cardFloat{
+    0%,100%{transform:rotateX(4deg) translateY(0);}
+    50%{transform:rotateX(4deg) translateY(-10px);}
+  }
+  .card:hover{
+    transform:rotateX(0deg) translateY(-6px) scale(1.01);
+    box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.15) inset;
+    animation:none;
+  }
 
-/* Sun */
-.sun{
-    width:180px;
-    height:180px;
-    background:#ff7b00;
-    border-radius:50%;
-    position:absolute;
-    top:80px;
-    right:150px;
-    box-shadow:0 0 60px #ff7b00;
-}
+  /* ── SHIMMER LINE ── */
+  .card::before{
+    content:'';
+    position:absolute;top:0;left:10%;right:10%;height:2px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);
+    border-radius:2px;
+    animation:shimmer 3s ease-in-out infinite;
+  }
+  @keyframes shimmer{0%,100%{opacity:.4;}50%{opacity:1;}}
 
-/* Hills */
-.hill1{
-    position:absolute;
-    bottom:-100px;
-    width:120%;
-    height:350px;
-    background:#5d9c59;
-    border-radius:50%;
-}
-
-.hill2{
-    position:absolute;
-    bottom:-140px;
-    width:100%;
-    height:280px;
-    background:#3d8361;
-    border-radius:50%;
-}
-
-/* Card */
-.card{
-    width:700px;
-    background:white;
-    padding:50px;
-    border-radius:40px;
-    box-shadow:0 20px 50px rgba(0,0,0,.15);
-    z-index:2;
-}
-
-.logo{
-    font-size:42px;
-}
-
-h1{
-    font-size:58px;
-    color:#5a3d2b;
-    margin:20px 0;
-}
-
-p{
-    font-size:20px;
-    color:#666;
-    line-height:1.6;
-}
-
-.btn{
+  /* ── LOGO ── */
+  .logo{
+    font-family:'Baloo 2',cursive;
+    font-size:clamp(18px,3vw,24px);
+    font-weight:800;
+    letter-spacing:.5px;
+    color:#FFD700;
+    text-shadow:0 0 20px rgba(255,200,0,.8),0 2px 4px rgba(0,0,0,.4);
+    margin-bottom:14px;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+  }
+  .logo-lion{
+    font-size:36px;
+    animation:lionBounce 2.5s ease-in-out infinite;
     display:inline-block;
-    margin-top:30px;
-    background:#ff7b00;
-    color:white;
+  }
+  @keyframes lionBounce{0%,100%{transform:scale(1) rotate(-5deg);}50%{transform:scale(1.15) rotate(5deg);}}
+
+  /* ── HEADING ── */
+  h1{
+    font-family:'Baloo 2',cursive;
+    font-size:clamp(28px,5.5vw,56px);
+    font-weight:800;
+    color:#fff;
+    line-height:1.15;
+    margin:8px 0 18px;
+    text-shadow:0 4px 20px rgba(0,0,0,.5),0 0 60px rgba(255,150,0,.4);
+    letter-spacing:-1px;
+  }
+  h1 span{
+    background:linear-gradient(135deg,#FFD700,#FF8C00);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+
+  /* ── DIVIDER ── */
+  .divider{
+    width:60px;height:3px;margin:0 auto 18px;border-radius:3px;
+    background:linear-gradient(90deg,#FF8C00,#FFD700,#FF8C00);
+  }
+
+  /* ── PARA ── */
+  p.desc{
+    font-size:clamp(15px,2vw,18px);
+    color:rgba(255,255,255,.88);
+    line-height:1.75;
+    max-width:500px;margin:0 auto;
+    text-shadow:0 1px 6px rgba(0,0,0,.4);
+  }
+
+  /* ── ANIMALS ── */
+  .animals{
+    display:flex;justify-content:center;gap:10px;
+    margin:26px 0 10px;
+  }
+  .animal{
+    font-size:38px;
+    display:inline-block;
+    animation:animalBob var(--ab,2.5s) ease-in-out infinite;
+    cursor:default;
+    filter:drop-shadow(0 4px 8px rgba(0,0,0,.4));
+    transition:transform .2s;
+  }
+  .animal:hover{transform:scale(1.35) rotate(8deg)!important;}
+  @keyframes animalBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+  /* ── BTN ── */
+  .btn-wrap{margin-top:32px;perspective:600px;}
+  .btn{
+    display:inline-block;
+    background:linear-gradient(135deg,#FF8C00,#FF5500);
+    color:#fff;
     text-decoration:none;
-    padding:16px 40px;
+    padding:16px 48px;
     border-radius:50px;
+    font-family:'Baloo 2',cursive;
     font-size:18px;
-    font-weight:bold;
-    transition:.3s;
-}
+    font-weight:700;
+    letter-spacing:.5px;
+    position:relative;
+    box-shadow:
+      0 6px 0 #a33500,
+      0 10px 20px rgba(255,80,0,.45),
+      inset 0 1px 0 rgba(255,255,255,.3);
+    transform:translateY(0) rotateX(0deg);
+    transition:all .18s cubic-bezier(.34,1.56,.64,1);
+  }
+  .btn:hover{
+    transform:translateY(-4px) rotateX(-8deg);
+    box-shadow:0 10px 0 #a33500,0 18px 36px rgba(255,80,0,.5),inset 0 1px 0 rgba(255,255,255,.3);
+  }
+  .btn:active{
+    transform:translateY(3px) rotateX(2deg);
+    box-shadow:0 2px 0 #a33500,0 4px 12px rgba(255,80,0,.3);
+  }
+  .btn-icon{margin-left:8px;font-size:20px;vertical-align:-3px;}
 
-.btn:hover{
-    transform:scale(1.08);
-}
+  /* ── BADGE ── */
+  .badge{
+    display:inline-block;
+    background:rgba(255,215,0,.2);
+    border:1px solid rgba(255,215,0,.5);
+    color:#FFD700;
+    font-size:12px;font-weight:700;letter-spacing:1.5px;
+    padding:4px 14px;border-radius:20px;
+    text-transform:uppercase;margin-bottom:14px;
+    backdrop-filter:blur(4px);
+    text-shadow:0 0 10px rgba(255,200,0,.6);
+  }
 
-.animals{
-    margin-top:25px;
-    font-size:40px;
-}
+  /* ── FOOTER QUOTE ── */
+  .quote{
+    margin-top:18px;
+    font-size:13px;
+    color:rgba(255,255,255,.5);
+    font-style:italic;letter-spacing:.3px;
+  }
 </style>
 </head>
 <body>
 
-<div class="hero">
+<!-- STARS -->
+<div class="stars" id="stars"></div>
 
-    <div class="sun"></div>
-
-    <div class="card">
-        <div class="logo">Childhood LOVE🦁Hakuna Matata</div>
-
-        <h1>owned by: Paras .C. Khobragade!</h1>
-
-        <p>
-            Explore the wild adventures of the savanna.
-            Enjoy a playful cartoon-inspired experience
-            filled with sunshine, animals and fun.
-        </p>
-
-        <div class="animals">
-            🦁 🐗 🦝 🦒 🐘
-        </div>
-
-        <a href="#" class="btn">Start Adventure</a>
-    </div>
-
-    <div class="hill1"></div>
-    <div class="hill2"></div>
-
+<!-- SUN -->
+<div class="sun-wrap">
+  <div class="rays" id="rays"></div>
+  <div class="sun"></div>
 </div>
 
+<!-- CLOUDS -->
+<div class="cloud" style="--dur:70s;--w:200px;top:22%;left:-20%;"><svg viewBox="0 0 200 80"><ellipse cx="100" cy="55" rx="90" ry="28" fill="rgba(255,200,150,.6)"/><ellipse cx="75" cy="44" rx="50" ry="28" fill="rgba(255,210,170,.7)"/><ellipse cx="125" cy="40" rx="45" ry="26" fill="rgba(255,220,180,.65)"/></svg></div>
+<div class="cloud" style="--dur:90s;--w:160px;top:35%;left:70%;animation-delay:-40s;"><svg viewBox="0 0 200 80"><ellipse cx="100" cy="55" rx="85" ry="25" fill="rgba(255,180,130,.5)"/><ellipse cx="70" cy="42" rx="45" ry="25" fill="rgba(255,200,150,.6)"/><ellipse cx="130" cy="38" rx="40" ry="22" fill="rgba(255,210,160,.55)"/></svg></div>
+<div class="cloud" style="--dur:55s;--w:130px;top:15%;left:30%;animation-delay:-20s;"><svg viewBox="0 0 200 80"><ellipse cx="100" cy="55" rx="80" ry="24" fill="rgba(255,220,180,.4)"/><ellipse cx="80" cy="44" rx="42" ry="23" fill="rgba(255,230,200,.5)"/></svg></div>
+
+<!-- FIREFLIES -->
+<div id="fireflies"></div>
+
+<!-- HILLS SVG -->
+<div class="hills">
+  <svg viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;height:260px;">
+    <!-- back hill -->
+    <ellipse cx="720" cy="500" rx="900" ry="300" fill="#1B5E20" opacity=".7"/>
+    <!-- mid hill -->
+    <path d="M0,400 Q200,180 500,240 Q720,280 960,230 Q1200,180 1440,260 L1440,400Z" fill="#2E7D32"/>
+    <!-- silhouette trees back -->
+    <g fill="#1B5E20" opacity=".9">
+      <rect x="110" y="230" width="10" height="50"/><polygon points="105,230 115,230 110,190"/><polygon points="102,215 118,215 110,180"/>
+      <rect x="320" y="220" width="10" height="60"/><polygon points="315,220 325,220 320,175"/><polygon points="312,205 328,205 320,170"/>
+      <rect x="1100" y="225" width="10" height="55"/><polygon points="1095,225 1105,225 1100,180"/><polygon points="1092,210 1108,210 1100,175"/>
+      <rect x="1300" y="235" width="10" height="45"/><polygon points="1295,235 1305,235 1300,195"/><polygon points="1292,220 1308,220 1300,188"/>
+    </g>
+    <!-- front hill -->
+    <path d="M0,400 Q360,270 720,310 Q1080,350 1440,290 L1440,400Z" fill="#388E3C"/>
+    <!-- grass texture front -->
+    <g fill="#43A047" opacity=".6">
+      <path d="M60,400 Q65,370 70,400"/><path d="M130,395 Q135,368 140,395"/>
+      <path d="M250,400 Q255,372 260,400"/><path d="M400,398 Q405,374 410,398"/>
+      <path d="M560,395 Q565,370 570,395"/><path d="M700,400 Q705,375 710,400"/>
+      <path d="M850,396 Q855,370 860,396"/><path d="M1000,400 Q1005,374 1010,400"/>
+      <path d="M1150,395 Q1155,368 1160,395"/><path d="M1320,400 Q1325,373 1330,400"/>
+    </g>
+    <!-- darkest foreground strip -->
+    <path d="M0,400 Q360,355 720,370 Q1080,385 1440,360 L1440,400Z" fill="#1B5E20"/>
+  </svg>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="card-scene">
+    <div class="card" id="card">
+
+      <div class="badge">✨ Pride Lands Edition</div>
+
+      <div class="logo">
+        <span class="logo-lion">🦁</span>
+        Childhood LOVE — Hakuna Matata
+      </div>
+
+      <h1>Owned by<br><span>Paras C. Khobragade!</span></h1>
+
+      <div class="divider"></div>
+
+      <p class="desc">
+        Journey through the golden savanna where the sun never sets
+        and every horizon holds a new adventure. No worries — just
+        wild wonder, sunshine, and the roar of the pride.
+      </p>
+
+      <div class="animals">
+        <span class="animal" style="--ab:2.1s">🦁</span>
+        <span class="animal" style="--ab:2.6s;animation-delay:.3s">🐗</span>
+        <span class="animal" style="--ab:2.3s;animation-delay:.6s">🦝</span>
+        <span class="animal" style="--ab:2.8s;animation-delay:.2s">🦒</span>
+        <span class="animal" style="--ab:2.4s;animation-delay:.5s">🐘</span>
+      </div>
+
+      <div class="btn-wrap">
+        <a href="#" class="btn">Start Adventure <span class="btn-icon">🌅</span></a>
+      </div>
+
+      <p class="quote">"Hakuna Matata — it means no worries, for the rest of your days."</p>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  /* STARS */
+  const starsEl = document.getElementById('stars');
+  for(let i=0;i<120;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    const size = Math.random()*2.5+.5;
+    s.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*3+1).toFixed(1)}s;animation-delay:${(Math.random()*3).toFixed(1)}s;opacity:${Math.random()*.6+.1}`;
+    starsEl.appendChild(s);
+  }
+
+  /* SUN RAYS */
+  const raysEl = document.getElementById('rays');
+  for(let i=0;i<12;i++){
+    const r = document.createElement('div');
+    r.className='ray';
+    r.style.transform=`rotate(${i*30}deg)`;
+    r.style.opacity=(0.5+Math.random()*.5).toFixed(2);
+    raysEl.appendChild(r);
+  }
+
+  /* FIREFLIES */
+  const ffEl = document.getElementById('fireflies');
+  for(let i=0;i<22;i++){
+    const f = document.createElement('div');
+    f.className='firefly';
+    f.style.cssText=`
+      left:${Math.random()*100}%;
+      top:${40+Math.random()*50}%;
+      --d:${(5+Math.random()*7).toFixed(1)}s;
+      --b:${(1.5+Math.random()*2).toFixed(1)}s;
+      --tx:${(Math.random()*80-40).toFixed(0)}px;
+      --ty:${(Math.random()*-70).toFixed(0)}px;
+      animation-delay:${(Math.random()*5).toFixed(1)}s;
+    `;
+    ffEl.appendChild(f);
+  }
+
+  /* 3D MOUSE TILT */
+  const card = document.getElementById('card');
+  const scene = card.parentElement;
+  scene.addEventListener('mousemove', e=>{
+    const rect = scene.getBoundingClientRect();
+    const cx = rect.left+rect.width/2, cy = rect.top+rect.height/2;
+    const dx = (e.clientX-cx)/(rect.width/2);
+    const dy = (e.clientY-cy)/(rect.height/2);
+    card.style.transform=`rotateX(${-dy*10}deg) rotateY(${dx*12}deg) translateY(-6px) scale(1.01)`;
+    card.style.animation='none';
+  });
+  scene.addEventListener('mouseleave', ()=>{
+    card.style.transform='';
+    card.style.animation='';
+    card.style.animation='cardFloat 5s ease-in-out infinite';
+  });
+</script>
 </body>
 </html>
